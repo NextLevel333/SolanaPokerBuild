@@ -1,11 +1,12 @@
 {
   "name": "poker-server",
   "version": "1.0.0",
-  "scripts": {
-    "dev": "ts-node --transpile-only server.ts",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev --name init"
-  },
+"scripts": {
+  "dev": "ts-node --transpile-only server.ts",
+  "start": "ts-node --transpile-only server.ts",
+  "prisma:generate": "prisma generate",
+  "prisma:migrate": "prisma migrate dev --name init"
+},
   "dependencies": {
     "@prisma/client": "^4.16.0",
     "@solana/web3.js": "^1.95.2",
