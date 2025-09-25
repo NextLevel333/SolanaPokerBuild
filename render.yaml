@@ -2,7 +2,7 @@
 
 databases:
   - name: poker-postgres
-    plan: starter
+    plan: free
     region: oregon
 
 services:
@@ -10,7 +10,7 @@ services:
     name: poker-server
     env: node
     region: oregon
-    plan: starter
+    plan: free
     branch: main
     buildCommand: |
       cd server
