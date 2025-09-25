@@ -8,15 +8,17 @@ databases:
 services:
   - type: web
     name: poker-server
-    env: node
+    env: docker
     region: oregon
-    plan: free
+    plan: starter
+    repo: https://github.com/NextLevel333/SolanaPokerBuild
     branch: main
+    path: server
     buildCommand: |
       cd server
       npm ci
-      npx prisma generate
-      npx prisma migrate deploy
+      npx prisma generate || true
+      npm run build
     startCommand: |
       cd server
       npm run start
@@ -25,6 +27,8 @@ services:
         fromDatabase:
           name: poker-postgres
           property: connectionString
+      - key: REDIS_URL
+        fromKV: poker-kv
       - key: JWT_SECRET
         sync: false
       - key: SOLANA_RPC
@@ -35,3 +39,4 @@ services:
         value: "1"
       - key: BIG_BLIND
         value: "2"
+
