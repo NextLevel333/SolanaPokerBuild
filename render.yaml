@@ -7,50 +7,29 @@ databases:
     plan: starter
     region: oregon
 
-kv_stores:
-  - name: poker-kv
-    plan: developer
-    region: oregon
-
-jobs:
-  - name: prisma-migrate
-    plan: free
-    type: run
-    shell: bash
-    env:
-      - name: DATABASE_URL
-      - name: REDIS_URL
-      - name: JWT_SECRET
-    command: |
-      set -e
-      cd server
-      npm install
-      npx prisma generate
-      npx prisma migrate deploy --preview-feature
-
 services:
   - type: web
     name: poker-server
-    env: docker
+    env: node
     region: oregon
     plan: starter
     repo: NextLevel333/SolanaPokerBuild
     branch: main
-    path: server
     buildCommand: |
       cd server
       npm ci
-      npx prisma generate || true
+      npx prisma generate
+      npx prisma migrate deploy
     startCommand: |
       cd server
       npm run start
-    env:
+    envVars:
       - key: DATABASE_URL
-        fromDatabase: poker-postgres
-      - key: REDIS_URL
-        fromKV: poker-kv
+        fromDatabase:
+          name: poker-postgres
+          property: connectionString
       - key: JWT_SECRET
-        fromSecret: JWT_SECRET
+        sync: false
       - key: SOLANA_RPC
         value: https://api.devnet.solana.com
       - key: ACTION_TIMEOUT_MS
@@ -60,16 +39,16 @@ services:
       - key: BIG_BLIND
         value: "2"
 
-static_sites:
+staticSites:
   - name: poker-client
     repo: NextLevel333/SolanaPokerBuild
     branch: main
-    path: client
     buildCommand: |
       cd client
       npm ci
       npm run build
     publishPath: client/build
-    env:
+    envVars:
       - key: REACT_APP_SERVER
         value: https://poker-server.onrender.com
+
