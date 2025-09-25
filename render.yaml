@@ -3,7 +3,6 @@
 
 databases:
   - name: poker-postgres
-    engine: postgres
     plan: starter
     region: oregon
 
@@ -39,7 +38,7 @@ services:
       - key: BIG_BLIND
         value: "2"
 
-staticSites:
+static_sites:
   - name: poker-client
     repo: NextLevel333/SolanaPokerBuild
     branch: main
@@ -51,4 +50,3 @@ staticSites:
     envVars:
       - key: REACT_APP_SERVER
         value: https://poker-server.onrender.com
-
