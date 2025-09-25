@@ -11,7 +11,6 @@ services:
     env: node
     region: oregon
     plan: starter
-    repo: NextLevel333/SolanaPokerBuild
     branch: main
     buildCommand: |
       cd server
