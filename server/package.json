@@ -3,7 +3,8 @@
   "version": "1.0.0",
 "scripts": {
   "dev": "ts-node --transpile-only server.ts",
-  "start": "ts-node --transpile-only server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js",
   "prisma:generate": "prisma generate",
   "prisma:migrate": "prisma migrate dev --name init"
 },
