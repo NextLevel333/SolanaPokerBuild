@@ -1,5 +1,4 @@
 # render.yaml for NextLevel333/SolanaPokerBuild
-# Place this file at the root of your repo (same level as server/ and client/)
 
 databases:
   - name: poker-postgres
@@ -37,16 +36,3 @@ services:
         value: "1"
       - key: BIG_BLIND
         value: "2"
-
-static_sites:
-  - name: poker-client
-    repo: NextLevel333/SolanaPokerBuild
-    branch: main
-    buildCommand: |
-      cd client
-      npm ci
-      npm run build
-    publishPath: client/build
-    envVars:
-      - key: REACT_APP_SERVER
-        value: https://poker-server.onrender.com
